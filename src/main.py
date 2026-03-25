@@ -1,0 +1,96 @@
+# from src.graph.stategraph import create_graph
+
+# graph = create_graph()
+
+# result = graph.invoke({
+#     "pdf_path": "/Users/hardik/PycharmProjects/ResumeEvaluator/src/data/HardikResumeUpdated.pdf"
+# })
+
+
+# # print(result["resume_text"])
+# print(result["skills_score"])
+# print(result["role_inferred"])
+# print(result["matched_skills"])
+# print(result["missing_skills"])
+
+# print("-----------")
+# print(result["name"])
+# print(result["email"])
+# print(result["phone_number"])
+# print(result["languages"])
+
+
+import os
+import streamlit as st
+from datetime import datetime
+from src.graph.state.graph_state import create_graph
+from src.graph.state.graph_state import ResumeState
+
+# Define upload folder (inside data/)
+UPLOAD_DIR = "src/data/uploads"
+os.makedirs(UPLOAD_DIR, exist_ok=True)
+
+# --- Streamlit App ---
+st.set_page_config(page_title="Resume Evaluator", layout="centered")
+st.title("📄 Resume Evaluator (AI-Powered)")
+
+st.markdown(
+    """
+    Upload a PDF resume and let the system analyze it for skills, projects, 
+    and relevance to AI/Tech roles.  
+    The results will show an inferred role and a skill-fit score.
+    """
+)
+
+# --- File Uploader ---
+uploaded_file = st.file_uploader("Upload Resume (PDF)", type=["pdf"])
+
+if uploaded_file is not None:
+    # --- Save file to data folder ---
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    file_path = os.path.join(UPLOAD_DIR, f"resume_{timestamp}.pdf")
+
+    with open(file_path, "wb") as f:
+        f.write(uploaded_file.getbuffer())
+
+    st.success(f"✅ File saved successfully: `{file_path}`")
+
+    # --- Initialize State ---
+    state: ResumeState = {
+        "pdf_path": file_path
+    }
+
+    # --- Create Graph ---
+    graph = create_graph()
+
+    with st.spinner("⚙️ Evaluating resume... please wait..."):
+        try:
+            # Invoke LangGraph pipeline
+            result_state = graph.invoke(state)
+
+            st.success("🎯 Resume evaluation completed!")
+            st.divider()
+
+            # --- Display Results ---
+            st.subheader("📊 Evaluation Summary")
+            if "role_inferred" in result_state:
+                st.write(f"**Inferred Role:** {result_state.get('role_inferred', 'Unknown')}")
+
+            if "skills_score" in result_state:
+                st.write(f"**Skills Score:** {result_state.get('skills_score', 0) * 100:.1f}%")
+
+            if "matched_skills" in result_state:
+                st.write("**Matched Skills:** ", ", ".join(result_state.get("matched_skills", [])))
+
+            if "missing_skills" in result_state:
+                st.write("**Missing Skills:** ", ", ".join(result_state.get("missing_skills", [])))
+
+            # Optionally show full result as JSON
+            with st.expander("🧠 Full State Output"):
+                st.json(result_state)
+
+            if "final_score" in result_state:
+                st.write(f"**Final Score:** {result_state.get('final_score', 0)}")
+
+        except Exception as e:
+            st.error(f"❌ Error during evaluation: {e}")

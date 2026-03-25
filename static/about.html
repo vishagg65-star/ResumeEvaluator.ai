@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About | Resume Evaluator</title>
+    <link rel="stylesheet" href="static/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body class="dark-theme">
+    <nav class="main-nav">
+        <div class="nav-logo">
+            <span class="accent-text">Resume</span>Evaluator
+        </div>
+        <ul class="nav-links">
+            <li><a href="/" class="nav-link"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="/about" class="nav-link active"><i class="fas fa-info-circle"></i> About</a></li>
+        </ul>
+        <button id="theme-toggle" class="theme-btn" aria-label="Toggle Dark/Light Mode">
+            <i class="fas fa-moon"></i>
+        </button>
+    </nav>
+    <div class="container">
+
+        <main class="main-content">
+            <section id="about-view" class="view">
+                <div class="about-section glass">
+                    <div class="about-header">
+                        <h3><i class="fas fa-info-circle"></i> Professional Resume Evaluation</h3>
+                        <p>Resume Evaluator is an enterprise-grade AI solution that simulates the mind of a technical recruiter. Using LangGraph and Groq's high-performance LLM, it breaks down your resume into core components and objectively measures them against industry standards for your target role.</p>
+                    </div>
+                    
+                    <div class="about-grid">
+                        <div class="about-card">
+                            <i class="fas fa-brain"></i>
+                            <h4>Graph-Based Pipeline</h4>
+                            <p>Uses a multi-node evaluation graph to independently analyze experience, skills, projects, and education.</p>
+                        </div>
+                        <div class="about-card">
+                            <i class="fas fa-microchip"></i>
+                            <h4>Groq Acceleration</h4>
+                            <p>Powered by Llama 3.1 8B on Groq LPUs for near-instant analysis and deep contextual understanding.</p>
+                        </div>
+                        <div class="about-card">
+                            <i class="fas fa-bullseye"></i>
+                            <h4>Semantic Matching</h4>
+                            <p>Beyond keyword matching—our AI understands the *underlying* skills and technical depth of your projects.</p>
+                        </div>
+                    </div>
+
+                    <div class="tech-stack-section">
+                        <h4>Built with Modern Tech</h4>
+                        <div class="tech-tags">
+                            <span class="tech-tag">FastAPI</span>
+                            <span class="tech-tag">LangGraph</span>
+                            <span class="tech-tag">Groq API</span>
+                            <span class="tech-tag">Vanilla JS/CSS</span>
+                        </div>
+                    </div>
+
+                    <div class="how-it-works">
+                        <h4>The Evaluation Process</h4>
+                        <div class="step-container">
+                            <div class="step">
+                                <div class="step-num">1</div>
+                                <div class="step-content"><strong>Extraction:</strong> Your PDF is parsed and personal info, skills, and work history are extracted using specialized nodes.</div>
+                            </div>
+                            <div class="step">
+                                <div class="step-num">2</div>
+                                <div class="step-content"><strong>Evaluation:</strong> Independent agents score your skills alignment, experience depth, and project relevance.</div>
+                            </div>
+                            <div class="step">
+                                <div class="step-num">3</div>
+                                <div class="step-content"><strong>Synthesis:</strong> A final summarizer node combines all scores and insights into a single comprehensive report.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="recruiter-benefits-section">
+                        <h4>How it Empowers Recruiters</h4>
+                        <div class="benefits-grid">
+                            <div class="benefit-item">
+                                <i class="fas fa-clock"></i>
+                                <h5>75% Time Saved</h5>
+                                <p>Automates the initial screening phase, allowing recruiters to focus on high-potential candidates.</p>
+                            </div>
+                            <div class="benefit-item">
+                                <i class="fas fa-balance-scale"></i>
+                                <h5>Zero Bias Screening</h5>
+                                <p>Objective evaluation based strictly on technical depth and experience patterns, eliminating unconscious bias.</p>
+                            </div>
+                            <div class="benefit-item">
+                                <i class="fas fa-users-cog"></i>
+                                <h5>Quality Pipeline</h5>
+                                <p>Identifies top 10% talent instantly by understanding project complexity rather than just keywords.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="app-footer">
+            <p>Created with <span class="heart">❤️</span> by <strong>Vishal Aggarwal</strong></p>
+        </footer>
+    </div>
+
+    <script>
+        // Shared theme logic for about page
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.body;
+        
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        if (savedTheme === 'light') {
+            body.classList.add('light-theme');
+            themeToggle.querySelector('i').classList.replace('fa-moon', 'fa-sun');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            const isLight = body.classList.toggle('light-theme');
+            const icon = themeToggle.querySelector('i');
+            if (isLight) {
+                icon.classList.replace('fa-moon', 'fa-sun');
+                localStorage.setItem('theme', 'light');
+            } else {
+                icon.classList.replace('fa-sun', 'fa-moon');
+                localStorage.setItem('theme', 'dark');
+            }
+            // Trigger chart refresh to update colors
+            if (typeof initCharts === 'function') initCharts();
+        });
+    </script>
+</body>
+</html>

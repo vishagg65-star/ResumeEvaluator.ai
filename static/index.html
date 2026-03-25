@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Evaluator | AI-Powered Analysis</title>
+    <link rel="stylesheet" href="static/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body class="dark-theme">
+    <nav class="main-nav">
+        <div class="nav-logo">
+            <span class="accent-text">Resume</span>Evaluator
+        </div>
+        <ul class="nav-links">
+            <li><a href="/" class="nav-link active"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="/about" class="nav-link"><i class="fas fa-info-circle"></i> About</a></li>
+        </ul>
+        <button id="theme-toggle" class="theme-btn" aria-label="Toggle Dark/Light Mode">
+            <i class="fas fa-moon"></i>
+        </button>
+    </nav>
+    <div class="container">
+
+        <main class="main-content">
+            <section id="home-view" class="view">
+            <section class="upload-section glass">
+                <form id="evaluation-form">
+                    <div class="input-group">
+                        <label for="role"><i class="fas fa-briefcase"></i> Target Job Role</label>
+                        <input type="text" id="role" name="role" placeholder="e.g. Software Engineer, Data Scientist" required>
+                    </div>
+
+                    <div class="drop-zone" id="drop-zone">
+                        <span class="drop-zone__prompt">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            Drop resume PDF here or click to upload
+                        </span>
+                        <input type="file" name="file" id="file-input" class="drop-zone__input" accept=".pdf" required>
+                    </div>
+
+                    <div id="file-info" class="file-info hidden">
+                        <i class="far fa-file-pdf"></i> <span id="filename"></span>
+                    </div>
+
+                    <button type="submit" id="submit-btn" class="btn-primary">
+                        <span class="btn-text">Analyze Resume</span>
+                        <span class="loader hidden"></span>
+                    </button>
+                </form>
+            </section>
+
+            <section id="results-section" class="results-section hidden">
+                <div class="results-grid">
+                    <div class="results-left">
+                        <div class="candidate-card glass">
+                            <h3><i class="fas fa-user-circle"></i> Candidate Info</h3>
+                            <div id="personal-info"></div>
+                        </div>
+
+                        <div class="summary-card glass">
+                            <h3><i class="fas fa-clipboard-list"></i> Summary</h3>
+                            <div id="evaluation-summary"></div>
+                        </div>
+
+                        <div class="experience-card glass">
+                            <h3><i class="fas fa-history"></i> Experience Details</h3>
+                            <div id="experience-detail"></div>
+                        </div>
+                    </div>
+
+                    <div class="results-right">
+                        <div class="score-card glass">
+                            <h3><i class="fas fa-chart-pie"></i> Evaluation Scores</h3>
+                            <div id="score-breakdown"></div>
+                        </div>
+
+                        <div class="skills-card glass">
+                            <h3><i class="fas fa-rocket"></i> Skills Insight</h3>
+                            <div id="skills-detail"></div>
+                        </div>
+
+                        <div class="projects-card glass">
+                            <h3><i class="fas fa-project-diagram"></i> Projects Showcase</h3>
+                            <div id="projects-detail"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="app-footer">
+            <p>Created with <span class="heart">❤️</span> by <strong>Vishal Aggarwal</strong></p>
+        </footer>
+    </div>
+
+    <script src="static/script.js"></script>
+</body>
+</html>

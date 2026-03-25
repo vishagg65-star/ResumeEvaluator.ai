@@ -1,0 +1,50 @@
+# ================================================================
+# Resume Evaluator Configuration
+# ================================================================
+
+app:
+  name: "Resume Evaluator"
+  version: "1.0"
+  description: "AI-powered resume evaluation pipeline using LangGraph + Streamlit"
+
+# ================================================================
+# LLM Configuration
+# ================================================================
+llm:
+  provider: "groq" # Switched from openai
+  model: "llama-3.1-8b-instant" 
+  temperature: 0 # 0 = deterministic output
+  max_tokens: 1500 # Max tokens per response
+  api_key_env: "GROQ_API_KEY" # Key from your .env file
+
+# ================================================================
+#  Weights for Score Aggregation
+# ================================================================
+weights:
+  skills: 0.4
+  experience: 0.3
+  projects: 0.2
+  education: 0.1
+
+# ================================================================
+#  Evaluation Thresholds
+# ================================================================
+thresholds:
+  fit_cutoff: 0.75 # Above this = "Fit"
+  warning_cutoff: 0.5 # Between this and fit_cutoff = "Borderline"
+
+# ================================================================
+#  Data Paths
+# ================================================================
+paths:
+  resumes_dir: "src/data/sample_resumes"
+  jd_dir: "src/data/job_descriptions"
+  outputs_dir: "src/data/outputs"
+
+# ================================================================
+#  Logging Configuration
+# ================================================================
+logging:
+  level: "INFO"
+  save_logs: true
+  log_file: "src/data/outputs/app.log"

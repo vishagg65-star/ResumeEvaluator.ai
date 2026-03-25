@@ -1,0 +1,34 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/index.py",
+      "use": "@vercel/python"
+    },
+    {
+      "src": "static/**",
+      "use": "@vercel/static"
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/evaluate",
+      "destination": "/api/index.py"
+    },
+    {
+      "source": "/about",
+      "destination": "/static/about.html"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/static/$1"
+    },
+    {
+      "source": "/",
+      "destination": "/static/index.html"
+    }
+  ],
+  "env": {
+    "PYTHONPATH": "."
+  }
+}

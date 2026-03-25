@@ -1,0 +1,14 @@
+langchain
+langgraph
+langchain_openai
+langchain_core
+typing
+dotenv
+pydantic
+streamlit
+langchain_community
+pdfplumber
+langchain-groq
+fastapi
+uvicorn
+python-multipart
