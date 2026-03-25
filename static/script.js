@@ -100,12 +100,15 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="info-item"><strong>Inferred Role</strong> ${data.role_inferred || data.best_fit_role || 'Unknown'}</div>
         `;
 
+        const suitability = (data.is_suitable || 'Unknown').toLowerCase();
+        const suitabilityClass = suitability === 'yes' ? 'suitability-yes' : (suitability === 'no' ? 'suitability-no' : '');
+
         document.getElementById('evaluation-summary').innerHTML = `
             <p>${data.final_summary || 'No summary generated.'}</p>
-            <div style="margin-top: 1rem; color: ${data.is_suitable === 'yes' ? 'var(--success-color)' : 'var(--error-color)'}">
-                <strong>Suitability:</strong> ${data.is_suitable ? data.is_suitable.toUpperCase() : 'Unknown'}
-                <br><small>${data.suitability_reason || ''}</small>
+            <div style="margin-top: 1.25rem; display: flex; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+                <strong>Suitability:</strong> <span class="suitability-box ${suitabilityClass}">${(data.is_suitable || 'Unknown')}</span>
             </div>
+            <div style="margin-top: 0.5rem;"><small>${data.suitability_reason || ''}</small></div>
         `;
 
         const scores = [
