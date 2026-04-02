@@ -11,11 +11,11 @@ app:
 # LLM Configuration
 # ================================================================
 llm:
-  provider: "groq" # Switched from openai
-  model: "llama-3.1-8b-instant" 
+  provider: "nvidia" # Switched from groq
+  model: "meta/llama-3.1-405b-instruct" 
   temperature: 0 # 0 = deterministic output
   max_tokens: 1500 # Max tokens per response
-  api_key_env: "GROQ_API_KEY" # Key from your .env file
+  api_key_env: "NVIDIA_API_KEY" # Key from your .env file
 
 # ================================================================
 #  Weights for Score Aggregation

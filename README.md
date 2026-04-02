@@ -46,7 +46,16 @@ $env:PYTHONPATH="."; python src/server.py
 ```
 Visit `http://localhost:8080` in your browser.
 
+## 🌐 Deployment (Vercel)
 
+This project is pre-configured for Vercel Serverless deployment.
+
+1.  Upload the root folder to a GitHub repository.
+2.  Connect the repository to Vercel.
+3.  Add the following **Environment Variables** in Vercel:
+    -   `GROQ_API_KEY`: Your key.
+    -   `PYTHONPATH`: `.`
+4.  Deploy!
 
 ## 📁 Project Structure
 

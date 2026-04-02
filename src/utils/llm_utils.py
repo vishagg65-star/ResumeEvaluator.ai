@@ -1,13 +1,21 @@
-# src/utils/llm_utils.py
 from langchain_groq import ChatGroq
-from src.config.settings import LLM_MODEL, LLM_TEMPERATURE, LLM_API_KEY
+from langchain_nvidia_ai_endpoints import ChatNVIDIA
+from src.config.settings import LLM_MODEL, LLM_TEMPERATURE, LLM_API_KEY, LLM_PROVIDER
 from langchain_core.prompts import ChatPromptTemplate
 
 def get_llm():
     """
-    Returns a configured ChatGroq instance with settings
-    and API key loaded via dotenv + config.yaml.
+    Returns a configured LLM instance based on the provider
+    specified in config.yaml.
     """
+    if LLM_PROVIDER == "nvidia":
+        return ChatNVIDIA(
+            model=LLM_MODEL,
+            temperature=LLM_TEMPERATURE,
+            api_key=LLM_API_KEY
+        )
+    
+    # Default to Groq
     return ChatGroq(
         model=LLM_MODEL,
         temperature=LLM_TEMPERATURE,

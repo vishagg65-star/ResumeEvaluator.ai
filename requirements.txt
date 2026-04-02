@@ -4,7 +4,6 @@ langchain_openai
 langchain_core
 typing
 dotenv
-pypdf
 pydantic
 streamlit
 langchain_community
@@ -13,3 +12,5 @@ langchain-groq
 fastapi
 uvicorn
 python-multipart
+pypdf
+langchain-nvidia-ai-endpoints
