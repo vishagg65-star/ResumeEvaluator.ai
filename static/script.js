@@ -63,10 +63,30 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         const formData = new FormData(form);
         
+        const progressContainer = document.getElementById('progress-container');
+        const progressBar = document.getElementById('upload-progress-bar');
+        const progressText = document.getElementById('upload-progress-text');
+
         submitBtn.disabled = true;
         btnText.textContent = "Processing...";
-        loader.classList.remove('hidden');
+        loader.classList.add('hidden'); // Ensure old spinner is hidden
+        progressContainer.classList.remove('hidden');
         resultsSection.classList.add('hidden');
+
+        let progress = 0;
+        progressBar.style.width = '0%';
+        progressText.textContent = '0%';
+
+        // Simulate progress creeping up to 95%
+        const progressInterval = setInterval(() => {
+            if (progress < 95) {
+                // Slower as it gets higher
+                const increment = Math.max(0.2, (95 - progress) / 15); 
+                progress += increment;
+                progressBar.style.width = `${progress}%`;
+                progressText.textContent = `${Math.floor(progress)}%`;
+            }
+        }, 300);
 
         try {
             const response = await fetch('/evaluate', {
@@ -74,21 +94,33 @@ document.addEventListener('DOMContentLoaded', () => {
                 body: formData
             });
 
+            clearInterval(progressInterval);
+            progress = 100;
+            progressBar.style.width = '100%';
+            progressText.textContent = '100%';
+
             if (!response.ok) {
                 const error = await response.json();
                 throw new Error(error.detail || "Evaluation failed");
             }
 
             const data = await response.json();
-            renderResults(data);
-            resultsSection.classList.remove('hidden');
-            resultsSection.scrollIntoView({ behavior: 'smooth' });
+            
+            // Wait briefly so user sees 100% completion
+            setTimeout(() => {
+                renderResults(data);
+                resultsSection.classList.remove('hidden');
+                resultsSection.scrollIntoView({ behavior: 'smooth' });
+            }, 600);
+
         } catch (error) {
             alert("Error: " + error.message);
         } finally {
-            submitBtn.disabled = false;
-            btnText.textContent = "Analyze Resume";
-            loader.classList.add('hidden');
+            setTimeout(() => {
+                progressContainer.classList.add('hidden');
+                submitBtn.disabled = false;
+                btnText.textContent = "Analyze Resume";
+            }, 800);
         }
     });
 
@@ -112,7 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
 
         const scores = [
-            { label: 'Overall Match', value: data.final_score || 0 },
+            { label: 'Overall Match', value: (data.final_score || 0) * 100 },
             { label: 'Skills Alignment', value: (data.skills_score || 0) * 100 },
             { label: 'Experience Depth', value: (data.experience_score || 0) * 100 },
             { label: 'Project Quality', value: (data.project_score || 0) * 100 }

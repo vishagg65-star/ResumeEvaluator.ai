@@ -12,7 +12,7 @@ app:
 # ================================================================
 llm:
   provider: "nvidia" # Switched from groq
-  model: "meta/llama-3.1-405b-instruct" 
+  model: "meta/llama-3.1-70b-instruct" 
   temperature: 0 # 0 = deterministic output
   max_tokens: 1500 # Max tokens per response
   api_key_env: "NVIDIA_API_KEY" # Key from your .env file

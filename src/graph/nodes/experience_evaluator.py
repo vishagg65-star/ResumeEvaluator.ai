@@ -17,8 +17,10 @@ You are an expert technical recruiter and data analyst. Your task is to extract 
 
 ### Calculation Rules:
 1. **Total Experience (Years)**: 
-   - Identify every unique professional job entry (EXCLUDE internships, volunteer work, and education).
-   - For each entry, find the Start Date and End Date. 
+   - Identify every unique professional job entry.
+   - EXCLUDE internships, volunteer work, and ALL educational degrees (B.Tech, MS, PhD, etc.).
+   - EXCLUDE ANY institution that is a University, College, Institute, or School.
+   - For each valid entry, find the Start Date and End Date. 
    - If the End Date is "Present", use the current date (March 2026).
    - Calculate the duration for each role in months.
    - **IMPORTANT**: If roles overlap in time, do NOT double-count the overlapping months.
@@ -33,9 +35,9 @@ You are an expert technical recruiter and data analyst. Your task is to extract 
    - "Frequent" if the average tenure is less than 1.5 years across multiple roles.
    - "Stable" otherwise.
 4. **Ranking Companies**: 
-   - List professional companies worked at.
+   - List ONLY professional companies/employers worked at.
    - Rank globally recognized/prestigious firms (e.g., FAANG, Fortune 500) at the top.
-   - Exclude schools/colleges from this specific list.
+   - STRICT WARNING: DO NOT include Universities, Colleges, Schools, or educational institutions in this list. Any entry containing "School", "College", "University", "Institute", "Academy" MUST be excluded.
 
 Return ONLY a valid JSON object with these keys:
 - "total_experience": number (e.g., 1.2)
